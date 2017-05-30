@@ -9,18 +9,16 @@ class Game
     @dictionary = File.readlines('dictionary.txt').map(&:chomp)
     @possible_words = []
     @losses = Hash.new(0)
-
-
   end
 
   def play_round
     @possible_words = @dictionary
     while true
       take_turn(@current_player)
-      @fragment << @guess
       if lose?
-        break @lossess[@current_player]+= 1
+        break @losses[@current_player]+= 1
       else
+        @fragment << @guess
         update_words
         next_player!
       end
@@ -58,6 +56,7 @@ class Game
   end
 
   def take_turn(player)
+    print "#{@current_player.name}"
     @guess = @current_player.guess(fragment)
     until valid_play?(@guess)
       # i = @current_player.guess(fragment)

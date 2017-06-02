@@ -41,9 +41,36 @@ class PolyTreeNode
   def dfs(target_value)
     return self if @value == target_value
     @children.each do |child|
-      return child if child.value == target_value
-      child.dfs(target_value)
+      result = child.dfs(target_value)
+      return result if result
+    end
+    nil
+  end
+  
+  def bfs(target_value)
+    queue = []
+    queue.push(self)
+    until queue.empty?
+      shifted_node = queue.shift
+      return shifted_node if shifted_node.value == target_value
+      queue += shifted_node.children
     end
     nil
   end
 end
+
+
+# a = PolyTreeNode.new("a")
+# b = PolyTreeNode.new("b")
+# c = PolyTreeNode.new("c")
+# d = PolyTreeNode.new("d")
+# e = PolyTreeNode.new("e")
+# f = PolyTreeNode.new("f")
+# g = PolyTreeNode.new("g")
+#
+# b.parent = a
+# c.parent = a
+# d.parent = b
+# e.parent = b
+# f.parent = c
+# g.parent = f

@@ -2,7 +2,7 @@ require 'byebug'
 
 class PolyTreeNode
   def initialize(value)
-    @value = value
+    @vaq
     @current_parent = nil
     @children = []
   end
@@ -46,7 +46,7 @@ class PolyTreeNode
     end
     nil
   end
-  
+
   def bfs(target_value)
     queue = []
     queue.push(self)

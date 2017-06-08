@@ -62,22 +62,22 @@ class TowersOfHanoi
     end
   end
 
-  def user_input
-  end
 
   def move(arr)
-    if towers[arr[0]].empty?
+    p towers
+    if arr.any? { |el| !el.between?(0,2) }
+      raise "Input valid tower"
+    elsif towers[arr[0]].empty?
       raise "Can't move from empty tower"
     elsif towers[arr[0]].last > towers[arr[1]].last
-      raise "Can't put big piece on a small piece"
-    elsif arr.any? { |el| !el.between?(0,2) }
-      raise "Input valid tower"
+      raise "Can't put big piece on small piece"
     else
       towers[arr[1]].push(towers[arr[0]].pop)
     end
   end
 
   def won?
+    p towers
     return true if towers[1] == [3,2,1] || towers[2] == [3,2,1]
     false
   end

@@ -82,32 +82,24 @@ describe TowersOfHanoi do
       end
 
       it "raise error if selecting a non-existent tower" do
-        expect{ game.move([3,1]) }.to raise_error("Input valid tower")
+        expect{ game.move([1,3]) }.to raise_error("Input valid tower")
       end
   end
 
   describe "#won?" do
     subject(:game) { TowersOfHanoi.new }
-      before(:each) do
-        game.towers = [[], [3,2,1], []]
-      end
       it "returns true if won" do
+        game.towers = [[], [3,2,1], []]
         expect(game.won?).to be(true)
       end
 
-    subject(:game) { TowersOfHanoi.new }
-      before(:each) do
-        game.towers = [[3], [2,1], []]
-      end
       it "returns false if not won" do
+        game.towers = [[3], [2,1], []]
         expect(game.won?).to be(false)
       end
 
-    subject(:game) { TowersOfHanoi.new }
-      before(:each) do
-        game.towers = [[3,2,1], [], []]
-      end
       it "returns false if in starting position" do
+        game.towers = [[3,2,1], [], []]
         expect(game.won?).to be(false)
       end
 

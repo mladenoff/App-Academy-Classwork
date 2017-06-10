@@ -45,7 +45,7 @@ class HashMap
     self
   end
 
-  uncomment when you have Enumerable included
+  # uncomment when you have Enumerable included
   def to_s
     pairs = inject([]) do |strs, (k, v)|
       strs << "#{k.to_s} => #{v.to_s}"

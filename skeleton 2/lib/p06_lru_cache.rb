@@ -34,7 +34,7 @@ class LRUCache
 
   def update_link!(link)
 
-    # suggested helper method; move a link to the end of the list
+
   end
 
   def eject!

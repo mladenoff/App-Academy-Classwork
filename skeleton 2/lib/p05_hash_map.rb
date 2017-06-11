@@ -74,6 +74,6 @@ class HashMap
   end
 
   def bucket(key)
-    @store[key.hash % num_buckets]
+    @store[(key.hash % num_buckets)]
   end
 end

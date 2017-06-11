@@ -15,6 +15,9 @@ class Link
   def remove
     @prev.next = @next
     @next.prev = @prev
+    @next = nil
+    @prev = nil
+    self
   end
 end
 
@@ -43,7 +46,7 @@ class LinkedList
   end
 
   def empty?
-    @head.next.key == :tail
+    @head.next == @tail
   end
 
   def get(key)
@@ -81,7 +84,7 @@ class LinkedList
 
   def remove(key)
     self.each do |link|
-      link.remove if link.key == key
+      break link.remove if link.key == key
     end
   end
 

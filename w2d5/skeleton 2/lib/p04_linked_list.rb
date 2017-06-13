@@ -13,6 +13,7 @@ class Link
   end
 
   def remove
+    p to_s
     @prev.next = @next
     @next.prev = @prev
     @next = nil

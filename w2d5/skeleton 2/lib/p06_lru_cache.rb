@@ -1,6 +1,5 @@
 require_relative 'p05_hash_map'
 require_relative 'p04_linked_list'
-require 'byebug'
 
 class LRUCache
   attr_reader :count
@@ -16,21 +15,13 @@ class LRUCache
   end
 
   def get(key)
-    p key
     if @map.include?(key)
-
-      @store.remove(key)
-
-      @store.last.next = @map[key]
-
-      @map[key].prev = @store.last
-
-
-
+      update_link!(@map[key])
+      @map[key].val
     else
       calc!(key)
     end
-    @store.get(key)
+    #@store.get(key)
   end
 
   def to_s
@@ -40,12 +31,15 @@ class LRUCache
   private
 
   def calc!(key)
-    @map.set(key, @store.append(key, @prc.call(key)))
+    val = @prc.call(key)
+    @map.set(key, @store.append(key, val))
     eject! if count > @max
+    val
   end
 
   def update_link!(link)
-
+    link.remove
+    @map[link.key] = @store.append(link.key, link.val)
   end
 
   def eject!

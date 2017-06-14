@@ -1,7 +1,6 @@
 class Course < ActiveRecord::Base
 
   validates :name, presence: true
-  # validates :prereq_id
   validates :instructor_id, presence: true
 
   has_many :enrollments,
@@ -18,7 +17,7 @@ class Course < ActiveRecord::Base
     foreign_key: :id,
     class_name: :User
 
-  has_one :prerequiste,
+  has_one :prerequisite,
     primary_key: :prereq_id,
     foreign_key: :id,
     class_name: :Course

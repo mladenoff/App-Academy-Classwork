@@ -9,4 +9,18 @@ class Response < ApplicationRecord
     class_name: "AnswerChoice",
     primary_key: :id,
     foreign_key: :answer_choice_id
+
+  has_one :question,
+    source: :question,
+    through: :answer_choice
+
+  def sibling_responses
+    self.question
+      .responses
+      .where
+      .not(id: self.id)
+  end
+
+  #validate
+
 end

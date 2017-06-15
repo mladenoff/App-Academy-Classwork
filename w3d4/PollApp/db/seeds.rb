@@ -22,4 +22,9 @@ answer_choice4 = AnswerChoice.create!(question_id: question2.id, body: "Spear an
 answer_choice5 = AnswerChoice.create!(question_id: question3.id, body: "Fine.")
 answer_choice6 = AnswerChoice.create!(question_id: question3.id, body: "How not?")
 
-response1 = Response.create!()
+response1 = Response.create!(answer_choice_id: answer_choice1.id, user_id: zach.id)
+response2 = Response.create!(answer_choice_id: answer_choice1.id, user_id: isak.id)
+response3 = Response.create!(answer_choice_id: answer_choice3.id, user_id: zach.id)
+response4 = Response.create!(answer_choice_id: answer_choice4.id, user_id: isak.id)
+response5 = Response.create!(answer_choice_id: answer_choice6.id, user_id: zach.id)
+response6 = Response.create!(answer_choice_id: answer_choice5.id, user_id: isak.id)

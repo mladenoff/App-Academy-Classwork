@@ -9,4 +9,5 @@ class User < ApplicationRecord
     class_name: "User",
     primary_key: :id,
     foreign_key: :user_id
+
 end

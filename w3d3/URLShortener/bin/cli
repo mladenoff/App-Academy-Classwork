@@ -1,0 +1,55 @@
+# require "launchy"
+# require 'user.rb'
+
+class Cli
+
+  def initialize
+    run
+  end
+
+  def run
+
+    ask_user
+    what_do
+    loop
+  end
+
+  def ask_user
+    print "Input your email:"
+    @current_user = User.find_by_email(gets.chomp)
+    #return instance of a User with Email input
+  end
+
+  def what_do
+    print "What do you want to do?
+          0. Create shortened URL
+          1. Visit shortened URL"
+    choice = gets.chomp
+    if choice.to_i == 1
+      visit_shortenedurl
+    else
+      create_shortenedurl
+    end
+  end
+
+  def create_shortenedurl
+    print "Type in your long url"
+    og_url = gets.chomp
+    output = ShortenedUrl.create_new(@current_user, og_url)
+
+    print "Short url is: #{output.short_url}"
+
+  end
+
+  def visit_shortenedurl
+    print "Type in the shortened URL"
+    @current_url = ShortenedUrl.find_by_short_url(gets.chomp)
+    Launchy.open(@current_url.long_url)
+    Visit.record_visit!(@current_user, @current_url)
+    print "Launching #{@current_url.long_url}"
+  end
+
+
+end
+
+Cli.new

@@ -14,7 +14,7 @@ class SQLObject
           #{table_name}
       SQL
 
-      @cols = table.first.map &:to_sym#= { |el| el.to_sym }
+      @cols = table.first.map &:to_sym #= { |el| el.to_sym }
     end
 
     @cols
@@ -110,6 +110,6 @@ class SQLObject
   end
 
   def save
-    
+    id.nil? ? insert : update
   end
 end

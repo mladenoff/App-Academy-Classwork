@@ -20,7 +20,14 @@ end
 
 class BelongsToOptions < AssocOptions
   def initialize(name, options = {})
-    # ...
+    p options
+    unless options[:class_name]
+      @class_name = name
+    else
+      @class_name = options[:class_name]
+    end
+    @primary_key = options[primary_key]
+    @foreign_key = options[foreign_key]
   end
 end
 

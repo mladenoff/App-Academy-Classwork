@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619232245) do
+ActiveRecord::Schema.define(version: 20170620003721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 20170619232245) do
   end
 
   add_index "artworks", ["title", "artist_id"], name: "index_artworks_on_title_and_artist_id", unique: true, using: :btree
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "body",       null: false
+    t.integer  "author_id",  null: false
+    t.integer  "artwork_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["artwork_id"], name: "index_comments_on_artwork_id", using: :btree
+  add_index "comments", ["author_id"], name: "index_comments_on_author_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",   null: false

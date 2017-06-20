@@ -14,7 +14,7 @@
 
 class Cat < ApplicationRecord
   include ActionView::Helpers::DateHelper
-
+  
   CAT_COLORS = %w(black tortoise tiger cow Pallas's)
 
   validates :name, presence: true
@@ -22,8 +22,6 @@ class Cat < ApplicationRecord
   validates :name, presence: true
   validates :color, inclusion: CAT_COLORS
   validates :sex, inclusion: ["M", "F"]
-
-
 
   def age
     time_ago_in_words(birth_date)

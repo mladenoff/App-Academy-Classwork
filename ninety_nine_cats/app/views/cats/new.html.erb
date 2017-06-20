@@ -1,5 +1,36 @@
 <h1>Add a kitter why dontcha!?</h1>
 
-<form action="index.html" method="post">
+<form action="<%= cats_url %>" method="post">
+
   <label for="name">Name</label>
+  <input type="text" name="cat[name]" value="">
+
+  <br>
+
+  <label for="birth_date">DOB</label>
+  <input type="date" name="cat[birth_date]" value="">
+
+  <br>
+
+  <label for="sex">Sex</label>
+  <br>
+  <input type="radio" name="cat[sex]" value="M">Male
+  <input type="radio" name="cat[sex]" value="F">Female
+  <br>
+
+  <label for="color">Color</label>
+  <select name="cat[color]">
+
+    <option disabled selected>Select color</option>
+
+    <% Cat::CAT_COLORS.each do |color|%>
+    <option value="<%= color %>"> <%= color %> </option>
+    <% end %>
+  </select>
+
+  <br>
+  <input type="submit" value="Add cat">
 </form>
+
+<br>
+<%= link_to "Return to the list of cats", cats_url %>

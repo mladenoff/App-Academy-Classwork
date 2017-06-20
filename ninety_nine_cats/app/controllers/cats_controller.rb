@@ -6,6 +6,15 @@ class CatsController < ApplicationController
 
   def show
     @cat = Cat.find(params[:id])
-    render :show
+    if @cat
+      render :show
+    else
+      redirect_to cats_url
+    end
+  end
+
+  def new
+    @cat = Cat.new
+    render :new
   end
 end

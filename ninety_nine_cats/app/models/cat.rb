@@ -15,7 +15,7 @@
 class Cat < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
-  CAT_COLORS = %w(black tortoise tiger cow)
+  CAT_COLORS = %w(black tortoise tiger cow Pallas's)
 
   validates :name, presence: true
   validates :birth_date, presence: true

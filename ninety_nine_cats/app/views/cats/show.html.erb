@@ -18,5 +18,12 @@
     <td>Color</td>
           <td><%= @cat.color %></td>
   </tr>
+  <tr>
+    <td>Description</td>
+          <td><%= @cat.description %></td>
+  </tr>
 </table>
+<br>
+<%= link_to "Edit #{@cat.name}", edit_cat_url %>
+<br>
 <%= link_to "Back to the kitters!", cats_url %>

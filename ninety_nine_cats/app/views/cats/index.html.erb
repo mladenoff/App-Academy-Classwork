@@ -1,9 +1,11 @@
 <h1>I got 99 problems and they're all cats</h1>
+<p>They are availible for rent though.</p>
 <h2>All of the kitters:</h2>
 <ul>
   <% @cats.each do |cat| %>
   <%= render cat %>
   <% end %>
 </ul>
+
 <h2>Add a cat</h2>
-<%= link_to "Do so here.", new_cat_url %>
+<%= link_to "Do so here", new_cat_url %>

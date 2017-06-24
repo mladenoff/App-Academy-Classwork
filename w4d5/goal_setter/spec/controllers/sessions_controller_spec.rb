@@ -30,6 +30,11 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it "redirects to the new session page"
+    it "redirects to the new session page" do
+      delete :destroy, params: { user: {} }
+
+      expect(response).to redirect_to('new')
+      expect(response).to have_http_status(200)
+    end
   end
 end

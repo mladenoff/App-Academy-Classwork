@@ -1,13 +1,14 @@
 class SubsController < ApplicationController
-  before_action :require_logged_in
+  before_action :require_logged_in, except: :index
   before_action :require_moderator, only: [:edit, :update]
 
   def index
-    # @subs = Sub.all ?
+    @subs = Sub.all
     render :index
   end
 
   def show
+    @sub = Sub.find(params[:id])
     render :show
   end
 

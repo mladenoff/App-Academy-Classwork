@@ -1,2 +1,11 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<h2> <%= @post.title %> </h2>
+<h3>Author : <%= @post.author.username %> </h3>
+URL: <%= @post.url %>
+<br>
+Content:
+<p>
+<%= @post.content %>
+</p>
+<%= link_to "Edit Post", edit_post_url(@post) %>
+<br>
+ <%= button_to "Delete Post", post_url(@post), method: :delete %>

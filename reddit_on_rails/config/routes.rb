@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
-  get 'posts/show'
+  root to: 'subs#index'
 
-  # get 'sessions/new'
-
-  # get 'sessions/create'
-  #
-  # get 'sessions/destroy'
   resources :users, only: [:new, :create]
   resources :subs, only: [:index, :show, :new, :create, :edit, :update]
   resources :posts, only: [:show, :new, :create, :edit, :update, :destroy]

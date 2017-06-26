@@ -1,0 +1,16 @@
+<h2><%= @sub.title %></h2>
+<b>Description:</b>
+<p>
+<%= @sub.description %>
+</p>
+
+Posts in this SubReddit:
+<ul>
+  <% @sub.posts.try(:each) do |post| %>
+  <li>
+    <%= link_to post.title, post_url(post) %> | <%= post.author.username %>
+  </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Post", new_post_url %>

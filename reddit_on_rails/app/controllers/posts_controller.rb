@@ -43,17 +43,20 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    redirect_to sub_url(@post.sub_id)
+    redirect_to subs_url
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:title, :url, :content, :sub_id)
+    params.require(:post).permit(:title, :url, :content, sub_ids: [])
   end
 
   def require_author
     post = Post.find(params[:id])
-    redirect_to post_url(post) unless post.author_id == current_user.id
+    unless post.author_id == current_user.id
+      flash[:errors] = ["You must be the author to edit or delete a post"]
+      redirect_to post_url(post)
+    end
   end
 end

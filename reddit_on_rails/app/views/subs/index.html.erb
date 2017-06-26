@@ -1,0 +1,11 @@
+<h2>All Sub-Reddits!!</h2>
+
+<ul>
+  <% @subs.try(:each) do |sub_r| %>
+  <li>
+    <%= link_to sub_r.title, sub_url(sub_r) %>
+  </li>
+  <% end %>
+</ul>
+
+<%= link_to "Create new sub-reddit", new_sub_url %>

@@ -10,8 +10,10 @@ Content:
 <br>
 Comments:
 <ul>
-  <% @post.comments.where(parent_comment_id: nil).each do |comment| %>
-  <%= render "layouts/comments", comment: comment%>
+  <% @all_comments[nil].each do |comment| %>
+  <li>
+  <%= render "layouts/comments", all_comments: @all_comments, comment: comment%>
+</li>
   <% end %>
 </ul>
 

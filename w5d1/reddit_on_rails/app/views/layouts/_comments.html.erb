@@ -1,0 +1,9 @@
+<p>
+<%= link_to comment.content, comment_url(comment.id) %>
+</p>
+<ul>
+  <% all_comments[comment.id].each do |child| %>
+    <li><%= render "layouts/comments", all_comments: all_comments, comment: child%>
+    </li>
+  <% end %>
+</ul>

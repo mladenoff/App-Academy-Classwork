@@ -1,0 +1,8 @@
+<li><%= link_to comment.content, comment_url(comment) %></li>
+<% unless comment.child_comments.empty? %>
+<ul>
+  <% comment.child_comments.each do |child| %>
+    <%= render "layouts/comments", comment: child%>
+  <% end %>
+</ul>
+<% end %>

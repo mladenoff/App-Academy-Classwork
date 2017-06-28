@@ -25,10 +25,12 @@ Array.prototype.twoSum = function(){
 Array.prototype.transpose = function() {
   let resultArray = [];
 
-  for (var i = 0; i < this.length; i++) {
-    for (var j = 0; j < this[i].length; j++) {
-      
+  for (var i = 0; i < this[0].length; i++) {
+    let subArray = [];
+    for (var j = 0; j < this.length; j++) {
+      subArray.push(this[j][i]);
     }
+    resultArray.push(subArray);
   }
-
+  return resultArray;
 };

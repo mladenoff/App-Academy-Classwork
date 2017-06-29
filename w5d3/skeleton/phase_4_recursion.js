@@ -114,7 +114,7 @@ let bsearch = function(arr, target) {
     let result = bsearch(arr.slice(pivotIdx + 1, arr.length), target);
     return result === -1 ? -1 : pivotIdx + 1 + result;
   }
-  else if (arr[pivotIdx] === target){
+  else {
     return pivotIdx;
   }
 };

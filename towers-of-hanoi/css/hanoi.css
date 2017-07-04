@@ -1,0 +1,18 @@
+html {
+  /*align-content: center;*/
+}
+
+.tower {
+  float: left;
+  background: gray;
+  border: 2px solid black;
+  width: 70px;
+  height: 150px;
+}
+
+.disc {
+  list-style: none;
+  border: 2px solid white;
+  width: 50px;
+  height: 30px;
+}

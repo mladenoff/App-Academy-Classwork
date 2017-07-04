@@ -1,0 +1,27 @@
+.grid {
+  width: 105px;
+  height: 105px;
+}
+
+.square {
+  list-style: none;
+  width: 30px;
+  height: 30px;
+  float: left;
+  border: 2px solid black;
+  text-align: center;
+  line-height: 25px;
+  font-size: 30px;
+}
+
+.unmoved {
+  background-color: gray;
+}
+
+.unmoved:hover {
+  background-color: yellow;
+}
+
+.moved {
+  background-color: white;
+}

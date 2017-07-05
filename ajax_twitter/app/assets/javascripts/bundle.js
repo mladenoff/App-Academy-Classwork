@@ -109,15 +109,15 @@ class FollowToggle {
   handleClick(){
     this.$el.on("click", event => {
       event.preventDefault();
-      const formData = $(event.currentTarget).serialize();
-      console.log(event);
       $.ajax({
-        url: "/users/:user_id/follow",
+        url: `/users/${this.userId}/follow`,
         type: this.followState === "followed" ? "DELETE" : "POST",
-        data: formData,
-        sucess(){
+        dataType: "json",
+        success: () => {
 
-          this.followedState = this.followState === "followed" ? "unfollowed" : "followed";
+          this.followState = this.followState === "followed" ? "unfollowed" : "followed";
+
+          console.log(this);
 
           this.render();
         }

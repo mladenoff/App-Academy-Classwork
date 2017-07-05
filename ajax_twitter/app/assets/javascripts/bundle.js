@@ -101,10 +101,13 @@ class FollowToggle {
   }
 
   render(){
+    this.$el.prop("disabled", false);
     if (this.followState === "unfollowed") {
       this.$el.html("Follow!");
     } else if (this.followState === "followed") {
       this.$el.html("Unfollow!");
+    } else {
+      this.$el.prop("disabled", true);
     }
   }
 
@@ -115,16 +118,20 @@ class FollowToggle {
       event.preventDefault();
 
       if (this.followState === "followed" ) {
+        this.followState = "unfollowing";
+        this.render();
         APIUtil.unfollowUser(this.userId)
         .then(() => {
           this.followState = "unfollowed";
           this.render();
         });
-      } else {
-      APIUtil.followUser(this.userId)
-        .then(() => {
-          this.followState = "followed";
-          this.render();
+      } else if (this.followState === "unfollowed") {
+        this.followState = "following";
+        this.render();
+        APIUtil.followUser(this.userId)
+          .then(() => {
+            this.followState = "followed";
+            this.render();
         });
       }
     });

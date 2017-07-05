@@ -79,7 +79,9 @@ $(() => {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(2);
 
 class FollowToggle {
   constructor(el) {
@@ -107,26 +109,73 @@ class FollowToggle {
   }
 
   handleClick(){
+
     this.$el.on("click", event => {
+
       event.preventDefault();
-      $.ajax({
-        url: `/users/${this.userId}/follow`,
-        type: this.followState === "followed" ? "DELETE" : "POST",
-        dataType: "json",
-        success: () => {
 
-          this.followState = this.followState === "followed" ? "unfollowed" : "followed";
-
-          console.log(this);
-
+      if (this.followState === "followed" ) {
+        APIUtil.unfollowUser(this.userId)
+        .then(() => {
+          this.followState = "unfollowed";
           this.render();
-        }
-      });
+        });
+      } else {
+      APIUtil.followUser(this.userId)
+        .then(() => {
+          this.followState = "followed";
+          this.render();
+        });
+      }
     });
   }
 }
 
+      // $.ajax({
+      //   url: `/users/${this.userId}/follow`,
+      //   type: this.followState === "followed" ? "DELETE" : "POST",
+      //   dataType: "json",
+      //   success: () => {
+      //
+      //     this.followState = this.followState === "followed" ? "unfollowed" : "followed";
+      //
+      //     console.log(this);
+      //
+      //     this.render();
+      //   }
+      // });
+//     });
+//   }
+// }
+
 module.exports = FollowToggle;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+const APIUtil = {
+  followUser: id => {
+    console.log(id);
+    return $.ajax({
+      url: `/users/${id}/follow`,
+      type: "POST",
+      dataType: "json"
+    });
+  },
+
+  unfollowUser: id => {
+    console.log(id);
+    return $.ajax({
+      url: `/users/${id}/follow`,
+      type: "DELETE",
+      dataType: "json"
+    });
+  }
+};
+
+module.exports = APIUtil;
 
 
 /***/ })

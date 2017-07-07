@@ -73,9 +73,9 @@
 const DOMNodeCollection = __webpack_require__(1);
 
 window.$l = function(selector) {
-  if (selector.instanceof(HTMLElement)) {
+  if (selector instanceof (HTMLElement)) {
     return new DOMNodeCollection(Array.from(selector));
-  } else if (selector.instanceof(String)) {
+  } else if (typeof selector === 'string') {
     let elementList = Array.from(document.querySelectorAll(selector));
     return new DOMNodeCollection(elementList);
   }
@@ -92,7 +92,7 @@ class DOMNodeCollection {
   }
 
   html (string) {
-    if (string) {
+    if (typeof string === 'string') {
       this.array.forEach((el) => {
         el.innerHTML = string;
       });
@@ -107,16 +107,85 @@ class DOMNodeCollection {
 
   append (args) {
     this.array.forEach((el) => {
-      if (args.instanceof(String)) {
-        el.innerHTML.concat(args);
-      } else if (args.instanceof(HTMLElement)) {
-        el.innerHTML.concat(args.outerHTML);
-      } else if (args.instanceof(DOMNodeCollection)) {
+      if (typeof args === 'string') {
+        el.innerHTML += (args);
+      } else if (args instanceof (HTMLElement)) {
+        el.innerHTML += args.outerHTML;
+      } else if (args instanceof (DOMNodeCollection)) {
         args.forEach((arg) => {
-          el.innerHTML.concat(arg.outerHTML);
+          el.innerHTML += arg.outerHTML;
         });
       }
     });
+  }
+
+  attr(attribute, value) {
+    if (typeof value !== 'string' && !value) {
+      return this.array[0].getAttribute(attribute);
+    } else {
+      this.array.forEach((el) => {
+        el.setAttribute(attribute,value);
+      });
+    }
+  }
+
+  addClass(className){
+    this.attr('class',className);
+  }
+
+  removeClass(className) {
+    if (typeof className === 'string') {
+      let classNames = className.split(" ");
+      this.array.forEach((el) => {
+        if (el.getAttribute('class')) {let elClasses = el.getAttribute('class').split(" ");
+        let tempClasses = [];
+        elClasses.forEach((elClass) => {
+          if (!classNames.includes(elClass)) {
+            tempClasses.push(elClass);
+          }
+        });
+        el.setAttribute('class', tempClasses.join(" "));}
+      });
+    } else {
+      this.array.forEach((el) => {
+        el.setAttribute('class', "");
+      });
+    }
+  }
+
+  children(){
+    let results = [];
+    this.array.forEach ((el) => {
+      results = results.concat(Array.from(el.children));
+    });
+    return new DOMNodeCollection(results);
+  }
+
+  parent(){
+    let results = [];
+    this.array.forEach ((el) => {
+      results.push(el.parentNode);
+    });
+    let uniqResults = [];
+    results.forEach ((result) => {
+      if (!uniqResults.includes(result)) {
+        uniqResults.push(result);
+      }
+    });
+    return new DOMNodeCollection(uniqResults);
+  }
+  find(selector) {
+    let results = [];
+    this.array.forEach((el) => {
+      results = results.concat(Array.from(el.querySelectorAll(selector)));
+    });
+    return new DOMNodeCollection(results);
+  }
+  remove() {
+    this.array.forEach((el) => {
+      el.outerHTML = "";
+    });
+    this.array = [];
   }
 }
 

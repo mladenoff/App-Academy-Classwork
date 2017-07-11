@@ -8,7 +8,7 @@ class TodoListItem extends React.Component {
   }
 
   render(){
-    return (<li key={this.todo.id}>{this.todo.title}</li>);
+    return (<li>{this.todo.title}</li>);
   }
 }
 

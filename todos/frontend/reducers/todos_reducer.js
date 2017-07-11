@@ -1,25 +1,5 @@
-import RECEIVE_TODOS from '../actions/todo_actions';
-import RECEIVE_TODO from '../actions/todo_actions';
+import { RECEIVE_TODOS, RECEIVE_TODO } from '../actions/todo_actions';
 import { merge } from 'lodash';
-
-
-const todosReducer = function(state = initialState, action) {
-  // debugger;
-  switch (action.type) {
-    case "RECEIVE_TODOS":
-      const newState = {};
-      for (var i = 0; i < action.todos.length; i++) {
-        newState[i+1] = action.todos[i];
-      }
-      return newState;
-    case "RECEIVE_TODO":
-
-      const todo = action.todo;
-      return merge(state, { [todo.id]: todo });
-    default:
-      return state;
-  }
-};
 
 const initialState = {
   1: {
@@ -36,8 +16,26 @@ const initialState = {
   },
 };
 
-export default todosReducer;
+const todosReducer = function(state = initialState, action) {
+  // debugger;
+  switch (action.type) {
+    case RECEIVE_TODOS:
+      const newState = {};
+      for (var i = 0; i < action.todos.length; i++) {
+        newState[i+1] = action.todos[i];
+      }
+      return newState;
+    case RECEIVE_TODO:
 
+      const todo = action.todo;
+      return merge({}, state, { [todo.id]: todo });
+    default:
+      return state;
+  }
+};
+
+export default todosReducer;
+//
 // const newTodos = [
 //   { id: 1,     title: "wash house",
 //       body: "with grease",

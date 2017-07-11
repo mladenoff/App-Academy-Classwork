@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import TodoList from './todo_list';
 
-import allTodos from '../../reducers/selectors';
+import { allTodos } from '../../reducers/selectors';
 import {receiveTodos, receiveTodo} from '../../actions/todo_actions';
 
 

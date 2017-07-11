@@ -4694,6 +4694,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var RECEIVE_TODOS = exports.RECEIVE_TODOS = "RECEIVE_TODOS";
 var RECEIVE_TODO = exports.RECEIVE_TODO = "RECEIVE_TODO";
+var REMOVE_TODO = exports.REMOVE_TODO = "REMOVE_TODO";
 
 var receiveTodos = exports.receiveTodos = function receiveTodos(todos) {
   return {
@@ -4705,6 +4706,13 @@ var receiveTodos = exports.receiveTodos = function receiveTodos(todos) {
 var receiveTodo = exports.receiveTodo = function receiveTodo(todo) {
   return {
     type: RECEIVE_TODO,
+    todo: todo
+  };
+};
+
+var removeTodo = exports.removeTodo = function removeTodo(todo) {
+  return {
+    type: REMOVE_TODO,
     todo: todo
   };
 };
@@ -24875,6 +24883,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     receiveTodo: function receiveTodo(todo) {
       return dispatch((0, _todo_actions.receiveTodo)(todo));
+    },
+    removeTodo: function removeTodo(todo) {
+      return dispatch((0, _todo_actions.removeTodo)(todo));
     }
   };
 };
@@ -24908,7 +24919,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var TodoList = function TodoList(_ref) {
   var todos = _ref.todos,
-      receiveTodo = _ref.receiveTodo;
+      receiveTodo = _ref.receiveTodo,
+      removeTodo = _ref.removeTodo;
   return _react2.default.createElement(
     'div',
     null,
@@ -24916,7 +24928,11 @@ var TodoList = function TodoList(_ref) {
       'ul',
       null,
       todos.map(function (todo, idx) {
-        return _react2.default.createElement(_todo_list_item2.default, { todo: todo, key: todo.id });
+        return _react2.default.createElement(_todo_list_item2.default, {
+          todo: todo,
+          removeTodo: removeTodo,
+          receiveTodo: receiveTodo,
+          key: todo.id });
       })
     ),
     _react2.default.createElement(_todo_form2.default, { receiveTodo: receiveTodo })
@@ -24956,20 +24972,41 @@ var TodoListItem = function (_React$Component) {
   function TodoListItem(props) {
     _classCallCheck(this, TodoListItem);
 
-    // debugger;
     var _this = _possibleConstructorReturn(this, (TodoListItem.__proto__ || Object.getPrototypeOf(TodoListItem)).call(this, props));
 
+    _this.removeTodo = props.removeTodo;
+    _this.receiveTodo = props.receiveTodo;
     _this.todo = props.todo;
     return _this;
   }
 
   _createClass(TodoListItem, [{
-    key: 'render',
+    key: "done",
+    value: function done() {
+      var done = !this.todo.done;
+      this.todo.done = done;
+      this.receiveTodo(this.todo);
+    }
+  }, {
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'li',
+        "li",
         null,
-        this.todo.title
+        this.todo.title,
+        " ",
+        _react2.default.createElement(
+          "button",
+          { onClick: this.done.bind(this) },
+          this.todo.done ? "done" : "not done"
+        ),
+        " ",
+        _react2.default.createElement(
+          "button",
+          {
+            onClick: this.removeTodo.bind(this, this.todo) },
+          "Remove Todo"
+        )
       );
     }
   }]);
@@ -25172,6 +25209,7 @@ var todosReducer = function todosReducer() {
   var action = arguments[1];
 
   // debugger;
+  Object.freeze(state);
   switch (action.type) {
     case _todo_actions.RECEIVE_TODOS:
       var newState = {};
@@ -25179,10 +25217,16 @@ var todosReducer = function todosReducer() {
         newState[i + 1] = action.todos[i];
       }
       return newState;
-    case _todo_actions.RECEIVE_TODO:
 
+    case _todo_actions.RECEIVE_TODO:
       var todo = action.todo;
       return (0, _lodash.merge)({}, state, _defineProperty({}, todo.id, todo));
+
+    case _todo_actions.REMOVE_TODO:
+      var nextState = (0, _lodash.merge)({}, state);
+      delete nextState[action.todo.id];
+      return nextState;
+
     default:
       return state;
   }

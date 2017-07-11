@@ -1,6 +1,8 @@
-export const allTodos = (state) => {
-  const todos = Object.keys(state.todos);
-  return todos.map ((el) => {
-    return state.todos[el].title;
+const allTodos = ({ todos }) => {
+  const keys = Object.keys(todos);
+  return keys.map ((id) => {
+    return todos[id];
   });
 };
+
+export default allTodos;

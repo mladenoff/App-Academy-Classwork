@@ -11350,6 +11350,10 @@ var _store2 = _interopRequireDefault(_store);
 
 var _todo_actions = __webpack_require__(33);
 
+var _todo_api_util = __webpack_require__(238);
+
+var _todo_api_util2 = _interopRequireDefault(_todo_api_util);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -25189,23 +25193,23 @@ var _lodash = __webpack_require__(237);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var initialState = {
-  1: {
-    id: 1,
-    title: "wash car",
-    body: "with soap",
-    done: false
-  },
-  2: {
-    id: 2,
-    title: "wash dog",
-    body: "with shampoo",
-    done: true
-  }
-};
+// const initialState = {
+//   1: {
+//     id: 1,
+//     title: "wash car",
+//     body: "with soap",
+//     done: false
+//   },
+//   2: {
+//     id: 2,
+//     title: "wash dog",
+//     body: "with shampoo",
+//     done: true
+//   },
+// };
 
 var todosReducer = function todosReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   // debugger;
@@ -42334,6 +42338,22 @@ exports.default = todosReducer;
 }.call(this));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(55), __webpack_require__(94)(module)))
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchRequest = exports.fetchRequest = function fetchRequest() {
+  return $.ajax({ method: 'GET', url: '/api/todos' });
+};
+
+window.fetchRequest = fetchRequest;
 
 /***/ })
 /******/ ]);

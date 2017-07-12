@@ -4692,6 +4692,14 @@ module.exports = ReactBrowserEventEmitter;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.createTodo = exports.fetchTodos = exports.removeTodo = exports.receiveTodo = exports.receiveTodos = exports.REMOVE_TODO = exports.RECEIVE_TODO = exports.RECEIVE_TODOS = undefined;
+
+var _todo_api_util = __webpack_require__(238);
+
+var APIUtil = _interopRequireWildcard(_todo_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 var RECEIVE_TODOS = exports.RECEIVE_TODOS = "RECEIVE_TODOS";
 var RECEIVE_TODO = exports.RECEIVE_TODO = "RECEIVE_TODO";
 var REMOVE_TODO = exports.REMOVE_TODO = "REMOVE_TODO";
@@ -4716,6 +4724,24 @@ var removeTodo = exports.removeTodo = function removeTodo(todo) {
     todo: todo
   };
 };
+
+var fetchTodos = exports.fetchTodos = function fetchTodos() {
+  return function (dispatch) {
+    APIUtil.fetchTodos().then(function (data) {
+      dispatch(receiveTodos(data));
+    });
+  };
+};
+
+var createTodo = exports.createTodo = function createTodo(todo) {
+  return function (dispatch) {
+    APIUtil.createTodo(todo).then(function (data) {
+      return dispatch(receiveTodo(data));
+    });
+  };
+};
+
+window.fetchTodos = fetchTodos;
 
 /***/ }),
 /* 34 */
@@ -11348,18 +11374,13 @@ var _store = __webpack_require__(234);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _todo_actions = __webpack_require__(33);
-
-var _todo_api_util = __webpack_require__(238);
-
-var _todo_api_util2 = _interopRequireDefault(_todo_api_util);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import { receiveTodos, receiveTodo, requestTodos } from './actions/todo_actions';
 
 document.addEventListener("DOMContentLoaded", function () {
   var store = (0, _store2.default)();
   window.store = store;
-  window.allTodos = _selectors2.default;
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), document.getElementById('content'));
 });
 
@@ -24882,11 +24903,12 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    receiveTodos: function receiveTodos() {
-      return dispatch((0, _todo_actions.receiveTodos)());
+    fetchTodos: function fetchTodos() {
+      return dispatch((0, _todo_actions.fetchTodos)());
     },
-    receiveTodo: function receiveTodo(todo) {
-      return dispatch((0, _todo_actions.receiveTodo)(todo));
+    // receiveTodo: (todo) => dispatch(receiveTodo(todo)),
+    createTodo: function createTodo(todo) {
+      return dispatch((0, _todo_actions.createTodo)(todo));
     },
     removeTodo: function removeTodo(todo) {
       return dispatch((0, _todo_actions.removeTodo)(todo));
@@ -24907,6 +24929,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
@@ -24921,27 +24945,52 @@ var _todo_form2 = _interopRequireDefault(_todo_form);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TodoList = function TodoList(_ref) {
-  var todos = _ref.todos,
-      receiveTodo = _ref.receiveTodo,
-      removeTodo = _ref.removeTodo;
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'ul',
-      null,
-      todos.map(function (todo, idx) {
-        return _react2.default.createElement(_todo_list_item2.default, {
-          todo: todo,
-          removeTodo: removeTodo,
-          receiveTodo: receiveTodo,
-          key: todo.id });
-      })
-    ),
-    _react2.default.createElement(_todo_form2.default, { receiveTodo: receiveTodo })
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TodoList = function (_React$Component) {
+  _inherits(TodoList, _React$Component);
+
+  function TodoList() {
+    _classCallCheck(this, TodoList);
+
+    return _possibleConstructorReturn(this, (TodoList.__proto__ || Object.getPrototypeOf(TodoList)).apply(this, arguments));
+  }
+
+  _createClass(TodoList, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.fetchTodos();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'ul',
+          null,
+          this.props.todos.map(function (todo, idx) {
+            return _react2.default.createElement(_todo_list_item2.default, {
+              todo: todo,
+              removeTodo: _this2.props.removeTodo,
+              receiveTodo: _this2.props.receiveTodo,
+              key: todo.id });
+          })
+        ),
+        _react2.default.createElement(_todo_form2.default, { createTodo: this.props.createTodo })
+      );
+    }
+  }]);
+
+  return TodoList;
+}(_react2.default.Component);
 
 exports.default = TodoList;
 
@@ -25079,12 +25128,13 @@ var TodoForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
+      var _this3 = this;
+
+      // debugger;
       event.preventDefault();
       var todo = Object.assign({}, this.state, { id: (0, _util.uniqueId)() });
-      this.props.receiveTodo(todo);
-      this.setState({
-        title: '',
-        body: ''
+      this.props.createTodo({ todo: todo }).then(function () {
+        return _this3.setState({ title: '', body: '' });
       });
     }
   }, {
@@ -25141,12 +25191,13 @@ var _root_reducer = __webpack_require__(235);
 
 var _root_reducer2 = _interopRequireDefault(_root_reducer);
 
-var _todo_actions = __webpack_require__(33);
+var _thunk = __webpack_require__(239);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var configureStore = function configureStore() {
-  return (0, _redux.createStore)(_root_reducer2.default);
+  var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_thunk.thunk));
 };
 
 exports.default = configureStore;
@@ -42349,11 +42400,36 @@ exports.default = todosReducer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var fetchRequest = exports.fetchRequest = function fetchRequest() {
+var fetchTodos = exports.fetchTodos = function fetchTodos() {
   return $.ajax({ method: 'GET', url: '/api/todos' });
 };
 
-window.fetchRequest = fetchRequest;
+var createTodo = exports.createTodo = function createTodo(todo) {
+  return $.ajax({ method: 'Post', url: '/api/todos', data: todo });
+};
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var thunk = exports.thunk = function thunk(_ref) {
+  var dispatch = _ref.dispatch,
+      getState = _ref.getState;
+  return function (next) {
+    return function (action) {
+      if (typeof action === 'function') {
+        return action(dispatch, getState);
+      }
+      return next(action);
+    };
+  };
+};
 
 /***/ })
 /******/ ]);

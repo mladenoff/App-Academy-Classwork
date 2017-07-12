@@ -18,13 +18,12 @@ class TodoForm extends React.Component {
   }
 
   handleSubmit (event) {
+    // debugger;
     event.preventDefault();
     const todo = Object.assign({}, this.state, { id: uniqueId() });
-    this.props.receiveTodo(todo);
-    this.setState({
-      title: '',
-      body: ''
-    });
+    this.props.createTodo({ todo }).then(
+      ()=>this.setState({ title: '', body: '' })
+    );
   }
 
   render(){

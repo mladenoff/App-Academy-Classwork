@@ -5,7 +5,6 @@ Rails.application.routes.draw do
     resources :guests, only: [:index, :show] do
       resources :gifts, only: [:index]
     end
-    resources :gift, only: [:show]
-    resources :invitations
+    resources :gifts, only: [:show]
   end
 end

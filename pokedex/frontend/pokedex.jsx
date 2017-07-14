@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { receiveAllPokemon, requestAllPokemon } from './actions/pokemon_actions';
 import configureStore from './store/store';
-import { selectAllPokemon } from './reducers/selectors';
 import Root from './components/root';
-
+import { HashRouter, Route } from 'react-router-dom';
 import * as APIUtil from './util/api_util';
 
 
@@ -16,7 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<Root store={store}/>, root);
 });
 
-window.fetchAllPokemon = APIUtil.fetchAllPokemon;
-window.requestAllPokemon = requestAllPokemon;
-window.receiveAllPokemon = receiveAllPokemon;
-window.selectAllPokemon = selectAllPokemon;
+
+import { receiveSinglePokemon } from './actions/pokemon_actions';
+// import { selectSinglePokemon } from './reducers/selectors';
+
+window.fetchSinglePokemon = APIUtil.fetchSinglePokemon;
+// window.requestAllPokemon = requestAllPokemon;
+window.receiveSinglePokemon = receiveSinglePokemon;
+// window.selectAllPokemon = selectAllPokemon;
+
+// getState(); // should return initial app state
+//
+// const getSuccess = pokemon => dispatch(receiveSinglePokemon(pokemon));
+// fetchSinglePokemon(7).then(getSuccess);
+//
+// getState(); // should return the app state populated with pokemon

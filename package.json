@@ -24,5 +24,14 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "webpack": "^3.2.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mladenoff/BenchBnB.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mladenoff/BenchBnB/issues"
+  },
+  "homepage": "https://github.com/mladenoff/BenchBnB#readme"
 }

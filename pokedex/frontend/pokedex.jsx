@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-import { receiveSinglePokemon } from './actions/pokemon_actions';
+import { requestSinglePokemon } from './actions/pokemon_actions';
 // import { selectSinglePokemon } from './reducers/selectors';
 
-window.fetchSinglePokemon = APIUtil.fetchSinglePokemon;
-// window.requestAllPokemon = requestAllPokemon;
-window.receiveSinglePokemon = receiveSinglePokemon;
+// window.fetchSinglePokemon = APIUtil.fetchSinglePokemon;
+window.requestSinglePokemon = requestSinglePokemon;
+// window.receiveSinglePokemon = receiveSinglePokemon;
 // window.selectAllPokemon = selectAllPokemon;
 
 // getState(); // should return initial app state

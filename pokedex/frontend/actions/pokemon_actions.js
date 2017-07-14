@@ -20,7 +20,7 @@ export const requestAllPokemon = () => (dispatch) => {
     .then(pokemon => dispatch(receiveAllPokemon(pokemon)));
 };
 
-// export const requestSinglePokemon = () => (dispatch) => {
-//   return APIUtil.fetchSinglePokemon()
-//     .then(pokemon => dispatch(receiveSinglePokemon(pokemon)));
-// };
+export const requestSinglePokemon = pokemonId => (dispatch) => {
+  return APIUtil.fetchSinglePokemon(pokemonId)
+    .then(pokemon => dispatch(receiveSinglePokemon(pokemon)));
+};
